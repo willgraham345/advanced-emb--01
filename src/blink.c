@@ -3,9 +3,12 @@
 #include <devicetree.h>
 #include <drivers/gpio.h>
 
+
+// Get node identifier for led0 and led1
 #define LED0_NODE DT_ALIAS(led0)
 #define LED1_NODE DT_ALIAS(led1)
 
+// Get label, pin, and flags for led0 and led1
 #if DT_NODE_HAS_STATUS(LED1_NODE, okay)
 #define LED0	DT_GPIO_LABEL(LED0_NODE, gpios)
 #define PIN0	DT_GPIO_PIN(LED0_NODE, gpios)
@@ -26,6 +29,8 @@
 
 #define STACKSIZE 2000
 
+
+// Define a thread
 struct k_thread coop_thread;
 K_THREAD_STACK_DEFINE(coop_stack, STACKSIZE);
 int counter;
