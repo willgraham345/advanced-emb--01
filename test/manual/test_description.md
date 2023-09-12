@@ -22,3 +22,14 @@ Unit tests usually have an expected output for a given input, and the output is 
 - Often done manually, simulated, or run on actual hardware. 
 
 
+
+# Test Plan
+## How to set up the test scenario
+
+
+## How to exercise the system
+## Expected results
+
+# Test Cases
+### Test main_setup()
+### Test main_loop()

@@ -3,12 +3,9 @@
 #include <devicetree.h>
 #include <drivers/gpio.h>
 
-
-// Get node identifier for led0 and led1
 #define LED0_NODE DT_ALIAS(led0)
 #define LED1_NODE DT_ALIAS(led1)
 
-// Get label, pin, and flags for led0 and led1
 #if DT_NODE_HAS_STATUS(LED1_NODE, okay)
 #define LED0	DT_GPIO_LABEL(LED0_NODE, gpios)
 #define PIN0	DT_GPIO_PIN(LED0_NODE, gpios)
@@ -29,18 +26,16 @@
 
 #define STACKSIZE 2000
 
-
-// Define a thread
 struct k_thread coop_thread;
 K_THREAD_STACK_DEFINE(coop_stack, STACKSIZE);
 int counter;
-bool led_is_on;
+bool led_state;
 
 void thread_entry(void)
 {
     const struct device *dev;
     dev = device_get_binding(LED1);
-    bool led_is_on = true;
+    bool led_state = true;
 	int ret = gpio_pin_configure(dev, PIN0, GPIO_OUTPUT_ACTIVE | FLAGS0);
 
 	struct k_timer t;
@@ -48,8 +43,8 @@ void thread_entry(void)
 
 	while (1) {
         counter = counter + 1;
-		gpio_pin_set(dev, PIN1, (int)led_is_on);
-		led_is_on = !led_is_on;
+        led_state = !led_state;
+		gpio_pin_set(dev, PIN1, (int)led_state);
 		k_timer_start(&t, K_MSEC(2000), K_NO_WAIT);
 		k_timer_status_sync(&t);
 	}
@@ -58,7 +53,7 @@ void thread_entry(void)
 void main(void)
 {
 	const struct device *dev;
-	led_is_on = true;
+	led_state = true;
 	int ret;
 
 	dev = device_get_binding(LED0);
@@ -84,8 +79,7 @@ void main(void)
 	}
 
 	while (1) {
-		gpio_pin_set(dev, PIN0, (int)led_is_on);
-		led_is_on = !led_is_on;
-		k_msleep(500);
-	}
+        led_state = main_thread_loop(dev, PIN0, led_state);
+        delay_ms(500);
+    }
 }
