@@ -43,8 +43,8 @@ void thread_entry(void)
 
 	while (1) {
         counter = counter + 1;
-        led_state = !led_state;
-		gpio_pin_set(dev, PIN1, (int)led_state);
+		toggle_led(dev, PIN1, led_state);
+        
 		k_timer_start(&t, K_MSEC(2000), K_NO_WAIT);
 		k_timer_status_sync(&t);
 	}
