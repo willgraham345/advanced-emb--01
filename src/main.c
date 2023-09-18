@@ -45,8 +45,8 @@ void thread_entry(void)
         counter = counter + 1;
 		toggle_led(dev, PIN1, led_state);
         
-		k_timer_start(&t, K_MSEC(2000), K_NO_WAIT);
-		k_timer_status_sync(&t);
+		k_timer_start(&t, K_MSEC(2000), K_NO_WAIT); // Library functions, no need to test
+		k_timer_status_sync(&t); // Library functions, no need to test
 	}
 }
 

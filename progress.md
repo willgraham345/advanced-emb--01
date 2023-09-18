@@ -12,6 +12,14 @@
     - [x] Done to an extent (main loop finished)
 - [ ] Put a call to the function where the code used to be.
 - [ ] Compile the code. You will be missing includes, variables, references, outputs, etc.
+### To DO
+- [ ] Deal with thread_entry
+- [ ] Test counter
+- [ ] Thread setup
+- [ ] Test k
+- [ ] Test thread creation?
+
+
 
 - [ ] For each missing variable or reference in the function you created, add input to the function
 - [ ] If you need to return more than one value, pass it as an out param, which is a pointer to a value in the caller that the function will populate. 
@@ -31,7 +39,7 @@
 - [ ] Create a new file in the test directory
 
 
-- [ ] Create a new file in the test directory.
+- [x] Create a new file in the test directory.
   - It can have any name, but by convention it has a similar name to the file you put your code in.
   - This can make it easier for another person to find the test later.
   - Add the code template from test.c in this directory to the file.
