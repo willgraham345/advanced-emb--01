@@ -6,4 +6,5 @@
 
 int toggle_led(const struct device *dev, gpio_pin_t pin, int led_state);
 // int main_thread_setup(const struct device *dev, gpio_pin_t pin, int led_state);
+int delay_ms(unsigned int delay);
 int main_thread_loop(const struct device *dev, gpio_pin_t pin, int led_state);
