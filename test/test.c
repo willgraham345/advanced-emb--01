@@ -1,5 +1,6 @@
-#include <stdint.h>
 #include <unity.h>
+#include "lab1.h"
+
 
 void setUp(void) {}
 
@@ -14,6 +15,6 @@ int main (void)
 {
     UNITY_BEGIN();
     RUN_TEST(testWorks);
-    RUN_TEST()
-    return UNITY_END();
+    UNITY_END();
+    return 0;
 }
