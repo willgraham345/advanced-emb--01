@@ -26,6 +26,18 @@ int main_thread_loop(const struct device* dev, gpio_pin_t pin, int led_state){
 /// @param led_state 
 /// @return 
     */
+    led_state = toggle_led(dev, pin, led_state);
+    return led_state;
+}
+
+int toggle_led(const struct device *dev, gpio_pin_t pin, int led_state){
+    /*
+/// @brief Toggle an LED
+/// @param dev
+/// @param pin
+/// @param led_state
+/// @return
+    */
     led_state = !led_state;
     gpio_pin_set(dev, pin, led_state);
     return led_state;
