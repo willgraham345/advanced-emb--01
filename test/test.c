@@ -25,6 +25,7 @@ void testWorks()
 void test_main_thread()
 {
     const struct device *dev = device_get_binding(LED);
+    int *counter = 0;
 
     int led_is_on = main_thread_setup(dev, PIN, FLAGS);
     TEST_ASSERT_TRUE_MESSAGE(!led_is_on, "LED flag should start toggled off");
@@ -33,10 +34,10 @@ void test_main_thread()
     TEST_ASSERT_TRUE_MESSAGE(led_is_on, "LED flag should be toggled on");
     TEST_ASSERT_TRUE_MESSAGE(gpio_pin_get(dev, PIN) , "GPIO should be toggled on");
 
-    // led_is_on = second_thread_setup(dev, PIN, FLAGS);
+    // led_is_on = second_thread_setup(dev, PIN, FLAGS, counter);
     // TEST_ASSERT_TRUE_MESSAGE(led_is_on, "LED flag should start toggled on");
 
-    // led_is_on = second_thread_iteration(dev, PIN, led_is_on);
+    // led_is_on = second_thread_iteration(dev, PIN, led_is_on, counter);
     // TEST_ASSERT_TRUE_MESSAGE(led_is_on, "LED flag should be toggled off");
     // TEST_ASSERT_TRUE_MESSAGE(gpio_pin_get(dev, PIN) , "GPIO should be toggled on");
 }
