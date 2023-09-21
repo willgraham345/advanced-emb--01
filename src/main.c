@@ -2,6 +2,7 @@
 #include <device.h>
 #include <devicetree.h>
 #include <drivers/gpio.h>
+#include "lab1.h"
 
 #define LED0_NODE DT_ALIAS(led0)
 #define LED1_NODE DT_ALIAS(led1)
@@ -35,15 +36,14 @@ void thread_entry(void)
 {
     const struct device *dev;
     dev = device_get_binding(LED1);
-    bool led_state = true;
-	int ret = gpio_pin_configure(dev, PIN0, GPIO_OUTPUT_ACTIVE | FLAGS0);
+
+	second_thread_setup(dev, PIN0, FLAGS0, &counter);
 
 	struct k_timer t;
 	k_timer_init(&t, NULL, NULL);
 
 	while (1) {
-        counter = counter + 1;
-		toggle_led(dev, PIN1, led_state);
+		second_thread_iteration(dev, PIN0, led_state, &counter);
         
 		k_timer_start(&t, K_MSEC(2000), K_NO_WAIT); // Library functions, no need to test
 		k_timer_status_sync(&t); // Library functions, no need to test
@@ -53,10 +53,10 @@ void thread_entry(void)
 void main(void)
 {
 	const struct device *dev;
-	led_state = true;
-	int ret;
 
-	dev = device_get_binding(LED0);
+	dev = device_get_binding(LED1);
+
+	led_state = main_thread_setup(dev, PIN1, FLAGS1);
 
     k_thread_create(&coop_thread,
                     coop_stack,
@@ -69,17 +69,8 @@ void main(void)
                     0,
                     K_NO_WAIT);
 
-	if (dev == NULL) {
-		return;
-	}
-
-	ret = gpio_pin_configure(dev, PIN0, GPIO_OUTPUT_ACTIVE | FLAGS0);
-	if (ret < 0) {
-		return;
-	}
-
 	while (1) {
-        led_state = main_thread_loop(dev, PIN0, led_state);
+        led_state = main_thread_loop(dev, PIN1, led_state);
         delay_ms(500);
     }
 }

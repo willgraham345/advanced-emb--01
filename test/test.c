@@ -1,4 +1,10 @@
+#include <stdint.h>
+#include <stdio.h>
 #include <unity.h>
+#include <zephyr.h>
+#include <device.h>
+#include <devicetree.h>
+#include <drivers/gpio.h>
 #include "lab1.h"
 
 #define LED_NODE DT_ALIAS(led3)
@@ -6,13 +12,13 @@
 #define PIN	DT_GPIO_PIN(LED_NODE, gpios)
 #define FLAGS	DT_GPIO_FLAGS(LED_NODE, gpios)
 
-int last_delay_time;
 void setUp(void) {}
 
 void tearDown(void) {}
 
 void test_delay_ms(void)
 {
+    int last_delay_time;
     last_delay_time = delay_ms(1000);
     TEST_ASSERT_EQUAL_INT_MESSAGE(last_delay_time, 1000, "delay_ms(1000) should return 1000");
 }
@@ -51,6 +57,7 @@ int main (void)
     UNITY_BEGIN();
     RUN_TEST(testWorks);
     RUN_TEST(test_main_thread);
+    RUN_TEST(test_delay_ms);
     UNITY_END();
     return 0;
 }
