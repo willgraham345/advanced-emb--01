@@ -56,6 +56,7 @@ int main_thread_iteration(const struct device *dev, gpio_pin_t pin, int led_stat
     return led_state;
 }
 
+/*
 int second_thread_setup(const struct device *dev, gpio_pin_t pin, gpio_flags_t flags, int *counter)
 {
     counter = 0;
@@ -70,3 +71,4 @@ int second_thread_iteration(const struct device *dev, gpio_pin_t pin, int led_st
     gpio_pin_set(dev, pin, (int)led_state);
     return led_state;
 }
+*/
